@@ -29027,7 +29027,7 @@ __webpack_require__.r(__webpack_exports__);
     if(true) {
       (function() {
         var localsJsonString = undefined;
-        // 1769460726065
+        // 1770398583834
         var cssReload = __webpack_require__(/*! ../../node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js */ "./node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js")(module.id, {});
         // only invalidate when locals change
         if (
@@ -29437,30 +29437,12 @@ function Main() {
       }
     }
   }, [moveToNextPost, moveToPreviousPost]);
-  var scrollToPost = (0,react__WEBPACK_IMPORTED_MODULE_1__.useCallback)(function (id) {
-    var container = postsRef.current;
-    var post = document.getElementById("post_".concat(id));
-    if (!container || !post) return;
-    container.scrollIntoView();
-  }, []);
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
-    var onFullscreenChange = function onFullscreenChange() {
-      var el = postsRef.current;
-      if (!el) return;
-      if (document.fullscreenElement === el && currentFsPost !== -1) {
-        // Let layout settle for one frame
-        requestAnimationFrame(function () {
-          scrollToPost(currentFsPost);
-        });
-      }
-    };
     window.addEventListener('keyup', handleKeyUp);
-    window.addEventListener('fullscreenchange', onFullscreenChange);
     return function () {
       window.removeEventListener('keyup', handleKeyUp);
-      window.removeEventListener('fullscreenchange', onFullscreenChange);
     };
-  }, [scrollToPost, handleKeyUp, currentFsPost]);
+  }, [handleKeyUp]);
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
     var el = postsRef.current;
     if (!el) return;
@@ -29506,20 +29488,25 @@ function Main() {
       el.removeEventListener('touchmove', onTouchMove);
     };
   }, []);
+  var scrollToPost = (0,react__WEBPACK_IMPORTED_MODULE_1__.useCallback)(function (id) {
+    var _post$parentElement;
+    var container = postsRef.current;
+    var post = document.getElementById("post_".concat(id));
+    if (!container || !post) {
+      return;
+    }
+    (_post$parentElement = post.parentElement) === null || _post$parentElement === void 0 || (_post$parentElement = _post$parentElement.parentElement) === null || _post$parentElement === void 0 || _post$parentElement.scrollIntoView();
+  }, [postsRef]);
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
-    var onFullscreenChange = function onFullscreenChange() {
-      var el = postsRef.current;
-      if (!el) return;
-      if (document.fullscreenElement === el && currentFsPost !== -1) {
-        // Let layout settle for one frame
-        requestAnimationFrame(function () {
-          scrollToPost(currentFsPost);
-        });
+    var fullscreenChange = function fullscreenChange() {
+      if (!document.fullscreenElement) {
+        scrollToPost(currentFsPost);
+        setCurrentFsPost(-1);
       }
     };
-    document.addEventListener('fullscreenchange', onFullscreenChange);
+    document.addEventListener('fullscreenchange', fullscreenChange);
     return function () {
-      document.removeEventListener('fullscreenchange', onFullscreenChange);
+      document.removeEventListener('fullscreenchange', fullscreenChange);
     };
   }, [currentFsPost, scrollToPost]);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(MainContext.Provider, {
@@ -29725,6 +29712,26 @@ function Image(post) {
     hideControls = _useState4[0],
     setHideControls = _useState4[1];
   var timeout = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(undefined);
+  var handleClick = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function () {
+    setLastMove(Date.now());
+    setHideControls(false);
+    if (document.fullscreenElement === postsRef.current) {
+      document.exitFullscreen();
+    } else {
+      var _postsRef$current, _postsRef$current2;
+      (_postsRef$current = postsRef.current) === null || _postsRef$current === void 0 || _postsRef$current.focus();
+      (_postsRef$current2 = postsRef.current) === null || _postsRef$current2 === void 0 || _postsRef$current2.requestFullscreen()["finally"](function () {
+        setCurrentFsPost(post.id);
+      });
+    }
+  }, [post.id, postsRef, setCurrentFsPost]);
+  var handleClickImage = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function () {
+    setCurrentFsPost(post.id);
+  }, [post.id, setCurrentFsPost]);
+  var handleMouseMove = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function () {
+    setHideControls(false);
+    setLastMove(Date.now());
+  }, []);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     clearTimeout(timeout.current);
     timeout.current = setTimeout(function () {
@@ -29739,33 +29746,15 @@ function Image(post) {
     ref: imageContainerRef,
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
       className: "image_container",
-      onMouseMove: function onMouseMove() {
-        setHideControls(false);
-        setLastMove(Date.now());
-      },
+      onMouseMove: handleMouseMove,
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
         id: "post_".concat(post.id),
         className: "post_img",
         src: post.file_url,
-        onClick: function onClick() {
-          setCurrentFsPost(post.id);
-        }
+        onClick: handleClickImage
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
         className: "image_fullscreen".concat(hideControls ? ' hidden' : ' visible'),
-        onClick: function onClick() {
-          setLastMove(Date.now());
-          setHideControls(false);
-          if (document.fullscreenElement === postsRef.current) {
-            document.exitFullscreen();
-            setCurrentFsPost(-1);
-          } else {
-            var _postsRef$current, _postsRef$current2;
-            (_postsRef$current = postsRef.current) === null || _postsRef$current === void 0 || _postsRef$current.focus();
-            (_postsRef$current2 = postsRef.current) === null || _postsRef$current2 === void 0 || _postsRef$current2.requestFullscreen()["finally"](function () {
-              setCurrentFsPost(post.id);
-            });
-          }
-        }
+        onClick: handleClick
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Tags, {
       post: post
@@ -29925,11 +29914,32 @@ function Video(post) {
   var getHidingControls = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function () {
     return hideControls ? ' hidden' : ' visible';
   }, [hideControls]);
+  var handleOnPlay = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function () {
+    document.querySelectorAll('video').forEach(function (vid) {
+      if (!vid.paused && videoRef.current !== vid) {
+        vid.pause();
+      }
+    });
+    setPlaying(true);
+  }, []);
+  var handleFullscreenClick = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function () {
+    setLastMove(Date.now());
+    setHideControls(false);
+    if (document.fullscreenElement === postsRef.current) {
+      document.exitFullscreen();
+    } else {
+      var _postsRef$current3, _postsRef$current4, _videoRef$current;
+      (_postsRef$current3 = postsRef.current) === null || _postsRef$current3 === void 0 || _postsRef$current3.focus();
+      (_postsRef$current4 = postsRef.current) === null || _postsRef$current4 === void 0 || _postsRef$current4.requestFullscreen();
+      (_videoRef$current = videoRef.current) === null || _videoRef$current === void 0 || _videoRef$current.play();
+      setCurrentFsPost(post.id);
+    }
+  }, [post.id, postsRef, setCurrentFsPost]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    var _videoRef$current;
-    if (!inView && !((_videoRef$current = videoRef.current) !== null && _videoRef$current !== void 0 && _videoRef$current.paused)) {
-      var _videoRef$current2;
-      (_videoRef$current2 = videoRef.current) === null || _videoRef$current2 === void 0 || _videoRef$current2.pause();
+    var _videoRef$current2;
+    if (!inView && !((_videoRef$current2 = videoRef.current) !== null && _videoRef$current2 !== void 0 && _videoRef$current2.paused)) {
+      var _videoRef$current3;
+      (_videoRef$current3 = videoRef.current) === null || _videoRef$current3 === void 0 || _videoRef$current3.pause();
     }
   }, [inView]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
@@ -29953,8 +29963,8 @@ function Video(post) {
     };
   }, [onWheel]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    var _videoRef$current3;
-    if ((_videoRef$current3 = videoRef.current) !== null && _videoRef$current3 !== void 0 && _videoRef$current3.paused) {
+    var _videoRef$current4;
+    if ((_videoRef$current4 = videoRef.current) !== null && _videoRef$current4 !== void 0 && _videoRef$current4.paused) {
       setHideControls(function (prev) {
         return prev ? false : prev;
       });
@@ -29985,8 +29995,8 @@ function Video(post) {
   }, []);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (currentFsPost === post.id) {
-      var _videoRef$current4;
-      (_videoRef$current4 = videoRef.current) === null || _videoRef$current4 === void 0 || _videoRef$current4.play();
+      var _videoRef$current5;
+      (_videoRef$current5 = videoRef.current) === null || _videoRef$current5 === void 0 || _videoRef$current5.play();
       setPlaying(true);
     }
   }, [currentFsPost, post.id]);
@@ -30016,14 +30026,7 @@ function Video(post) {
         onPause: function onPause() {
           return setPlaying(false);
         },
-        onPlay: function onPlay() {
-          document.querySelectorAll('video').forEach(function (vid) {
-            if (!vid.paused && videoRef.current !== vid) {
-              vid.pause();
-            }
-          });
-          setPlaying(true);
-        },
+        onPlay: handleOnPlay,
         loop: looping
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
         className: "video_playpause".concat(playState).concat(getHidingControls()),
@@ -30037,20 +30040,7 @@ function Video(post) {
         onWheel: handleVolumeScroll
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
         className: "video_fullscreen".concat(getHidingControls()),
-        onClick: function onClick() {
-          setLastMove(Date.now());
-          setHideControls(false);
-          if (document.fullscreenElement === postsRef.current) {
-            document.exitFullscreen();
-            setCurrentFsPost(-1);
-          } else {
-            var _postsRef$current3, _postsRef$current4, _videoRef$current5;
-            (_postsRef$current3 = postsRef.current) === null || _postsRef$current3 === void 0 || _postsRef$current3.focus();
-            (_postsRef$current4 = postsRef.current) === null || _postsRef$current4 === void 0 || _postsRef$current4.requestFullscreen();
-            (_videoRef$current5 = videoRef.current) === null || _videoRef$current5 === void 0 || _videoRef$current5.play();
-            setCurrentFsPost(post.id);
-          }
-        }
+        onClick: handleFullscreenClick
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Tags, {
       post: post
@@ -30551,7 +30541,7 @@ function Tag(_ref) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("67eb63f2aec08f75c7e9")
+/******/ 		__webpack_require__.h = () => ("a0041aa8f4b2a5383a3f")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
