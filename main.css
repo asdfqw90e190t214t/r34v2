@@ -509,9 +509,17 @@ body,
                     }
 
                     &>.autocomplete_entry {
-                        width: max-content;
-                        max-width: 15vw;
-                        padding: 0.25vw 0.45vw;
+                        & {
+                            background-color: rgb(34, 0, 54);
+                            width: max-content;
+                            padding: 0.25vw 0.45vw;
+                            width: stretch;
+                        }
+
+                        &:hover {
+                            background-color: rgb(54, 0, 85);
+                            cursor: pointer;
+                        }
                     }
                 }
             }

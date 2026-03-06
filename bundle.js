@@ -29027,7 +29027,7 @@ __webpack_require__.r(__webpack_exports__);
     if(true) {
       (function() {
         var localsJsonString = undefined;
-        // 1770670463313
+        // 1772776233488
         var cssReload = __webpack_require__(/*! ../../node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js */ "./node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js")(module.id, {});
         // only invalidate when locals change
         if (
@@ -29267,16 +29267,18 @@ function Main() {
             } else {
               pushExcluded(tag);
             }
-            _context2.next = 24;
+            setSearchValue('');
+            setAutocomplete([]);
+            _context2.next = 26;
             break;
-          case 22:
-            _context2.prev = 22;
-            _context2.t0 = _context2["catch"](1);
           case 24:
+            _context2.prev = 24;
+            _context2.t0 = _context2["catch"](1);
+          case 26:
           case "end":
             return _context2.stop();
         }
-      }, _callee2, null, [[1, 22]]);
+      }, _callee2, null, [[1, 24]]);
     }));
     return function tryAddTag(_x) {
       return _ref2.apply(this, arguments);
@@ -29637,6 +29639,9 @@ function Main() {
             children: autocomplete.map(function (o) {
               return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
                 className: "autocomplete_entry",
+                onClick: function onClick() {
+                  return tryAddTag(o.value);
+                },
                 children: decodeHTML(o.label)
               }, o.value);
             })
@@ -30433,12 +30438,12 @@ function Tag(_ref) {
   var tag = _ref.tag;
   var _useContext = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(_main__WEBPACK_IMPORTED_MODULE_1__.MainContext),
     removeTagCallback = _useContext.removeTagCallback;
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
     onClick: function onClick() {
       return removeTagCallback(tag);
     },
     className: "tag",
-    children: tag.name
+    children: [tag.name, " (", tag.count, ")"]
   });
 }
 
@@ -30541,7 +30546,7 @@ function Tag(_ref) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("3af5fa286a6093635733")
+/******/ 		__webpack_require__.h = () => ("6d011da8f82aa0c7c4eb")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
