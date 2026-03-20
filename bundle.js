@@ -29027,7 +29027,7 @@ __webpack_require__.r(__webpack_exports__);
     if(true) {
       (function() {
         var localsJsonString = undefined;
-        // 1772776233488
+        // 1773979396759
         var cssReload = __webpack_require__(/*! ../../node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js */ "./node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js")(module.id, {});
         // only invalidate when locals change
         if (
@@ -29158,7 +29158,7 @@ function Main() {
   var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(-1),
     _useState12 = _slicedToArray(_useState11, 2),
     currentFsPost = _useState12[0],
-    setCurrentFsPost = _useState12[1];
+    setCurrentFsPostNAF = _useState12[1];
   var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true),
     _useState14 = _slicedToArray(_useState13, 2),
     autoloadEnd = _useState14[0],
@@ -29211,6 +29211,11 @@ function Main() {
       }))();
     }, 250);
   };
+  var setCurrentFsPost = (0,react__WEBPACK_IMPORTED_MODULE_1__.useCallback)(function (id) {
+    requestAnimationFrame(function () {
+      setCurrentFsPostNAF(id);
+    });
+  }, []);
   var removeTagCallback = (0,react__WEBPACK_IMPORTED_MODULE_1__.useCallback)(function (tag) {
     filterIncluded(function (t) {
       return t.id !== tag.id;
@@ -29225,37 +29230,52 @@ function Main() {
       return _regeneratorRuntime().wrap(function _callee2$(_context2) {
         while (1) switch (_context2.prev = _context2.next) {
           case 0:
-            console.log(value);
-            _context2.prev = 1;
-            _context2.next = 4;
-            return api.getTag(value);
-          case 4:
-            tag = _context2.sent;
-            if (tag) {
-              _context2.next = 17;
+            if (!(includedTags.find(function (o) {
+              return o.name === value;
+            }) || excludedTags.find(function (o) {
+              return o.name === value;
+            }))) {
+              _context2.next = 4;
               break;
             }
-            _context2.next = 8;
+            filterIncluded(function (t) {
+              return t.name !== value;
+            });
+            filterExcluded(function (t) {
+              return t.name !== value;
+            });
+            return _context2.abrupt("return");
+          case 4:
+            _context2.prev = 4;
+            _context2.next = 7;
+            return api.getTag(value);
+          case 7:
+            tag = _context2.sent;
+            if (tag) {
+              _context2.next = 20;
+              break;
+            }
+            _context2.next = 11;
             return api.getAutocomplete(value);
-          case 8:
+          case 11:
             testAutocomplete = _context2.sent;
             first = testAutocomplete[0];
             if (first) {
-              _context2.next = 12;
+              _context2.next = 15;
               break;
             }
             return _context2.abrupt("return");
-          case 12:
-            _context2.next = 14;
+          case 15:
+            _context2.next = 17;
             return api.getTag(first.value);
-          case 14:
+          case 17:
             tag = _context2.sent;
             if (tag) {
-              _context2.next = 17;
+              _context2.next = 20;
               break;
             }
             return _context2.abrupt("return");
-          case 17:
+          case 20:
             filterIncluded(function (o) {
               return o.id !== tag.id;
             });
@@ -29269,16 +29289,16 @@ function Main() {
             }
             setSearchValue('');
             setAutocomplete([]);
-            _context2.next = 26;
+            _context2.next = 29;
             break;
-          case 24:
-            _context2.prev = 24;
-            _context2.t0 = _context2["catch"](1);
-          case 26:
+          case 27:
+            _context2.prev = 27;
+            _context2.t0 = _context2["catch"](4);
+          case 29:
           case "end":
             return _context2.stop();
         }
-      }, _callee2, null, [[1, 24]]);
+      }, _callee2, null, [[4, 27]]);
     }));
     return function tryAddTag(_x) {
       return _ref2.apply(this, arguments);
@@ -29362,7 +29382,7 @@ function Main() {
           return _context4.stop();
       }
     }, _callee4);
-  })), [currentFsPost, excludedTags, includedTags, page, posts]);
+  })), [currentFsPost, excludedTags, includedTags, page, posts, setCurrentFsPost]);
   var moveToPreviousPost = (0,react__WEBPACK_IMPORTED_MODULE_1__.useCallback)(/*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
     var current, newPosts, newFs, post;
     return _regeneratorRuntime().wrap(function _callee5$(_context5) {
@@ -29416,7 +29436,7 @@ function Main() {
           return _context5.stop();
       }
     }, _callee5);
-  })), [currentFsPost, excludedTags, includedTags, page, posts]);
+  })), [currentFsPost, excludedTags, includedTags, page, posts, setCurrentFsPost]);
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
     if (!document.fullscreenElement) {
       return;
@@ -29510,7 +29530,7 @@ function Main() {
     return function () {
       document.removeEventListener('fullscreenchange', fullscreenChange);
     };
-  }, [currentFsPost, scrollToPost]);
+  }, [currentFsPost, scrollToPost, setCurrentFsPost]);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(MainContext.Provider, {
     value: {
       removeTagCallback: removeTagCallback,
@@ -29726,12 +29746,16 @@ function Image(post) {
       var _postsRef$current, _postsRef$current2;
       (_postsRef$current = postsRef.current) === null || _postsRef$current === void 0 || _postsRef$current.focus();
       (_postsRef$current2 = postsRef.current) === null || _postsRef$current2 === void 0 || _postsRef$current2.requestFullscreen()["finally"](function () {
-        setCurrentFsPost(post.id);
+        requestAnimationFrame(function () {
+          setCurrentFsPost(post.id);
+        });
       });
     }
   }, [post.id, postsRef, setCurrentFsPost]);
   var handleClickImage = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function () {
-    setCurrentFsPost(post.id);
+    requestAnimationFrame(function () {
+      setCurrentFsPost(post.id);
+    });
   }, [post.id, setCurrentFsPost]);
   var handleMouseMove = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function () {
     setHideControls(false);
@@ -30546,7 +30570,7 @@ function Tag(_ref) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("6d011da8f82aa0c7c4eb")
+/******/ 		__webpack_require__.h = () => ("6c4e0d8c2cd5fef929ec")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
