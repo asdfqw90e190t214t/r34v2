@@ -28934,6 +28934,54 @@ function useArray() {
 
 /***/ }),
 
+/***/ "./src/hook/useIncrement.ts":
+/*!**********************************!*\
+  !*** ./src/hook/useIncrement.ts ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   useIncrement: () => (/* binding */ useIncrement)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+
+function useIncrement(initial) {
+  var increment = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+  var min = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : Number.MIN_VALUE;
+  var max = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : Number.MAX_VALUE;
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(initial),
+    _useState2 = _slicedToArray(_useState, 2),
+    value = _useState2[0],
+    setValue = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(increment),
+    _useState4 = _slicedToArray(_useState3, 1),
+    amount = _useState4[0];
+  var inc = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function () {
+    return setValue(function (p) {
+      return Math.min(max, Math.max(min, p + amount));
+    });
+  }, [amount, min, max]);
+  var dec = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function () {
+    return setValue(function (p) {
+      return Math.min(max, Math.max(min, p - amount));
+    });
+  }, [amount, min, max]);
+  var set = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function (v) {
+    return setValue(Math.min(max, Math.max(min, v)));
+  }, [min, max]);
+  return [value, inc, dec, set];
+}
+
+/***/ }),
+
 /***/ "./src/hook/useToggle.ts":
 /*!*******************************!*\
   !*** ./src/hook/useToggle.ts ***!
@@ -29027,7 +29075,7 @@ __webpack_require__.r(__webpack_exports__);
     if(true) {
       (function() {
         var localsJsonString = undefined;
-        // 1773979396759
+        // 1773980262151
         var cssReload = __webpack_require__(/*! ../../node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js */ "./node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js")(module.id, {});
         // only invalidate when locals change
         if (
@@ -29069,7 +29117,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _tag__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./tag */ "./src/view/tag.tsx");
 /* harmony import */ var _post__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./post */ "./src/view/post.tsx");
 /* harmony import */ var _settings__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./settings */ "./src/view/settings.tsx");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _hook_useIncrement__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../hook/useIncrement */ "./src/hook/useIncrement.ts");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
@@ -29085,6 +29134,7 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+
 
 
 
@@ -29110,7 +29160,11 @@ var MainContext = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_1__.createConte
   autoloadEnd: true,
   currentFsPost: -1,
   looping: false,
-  setLooping: function setLooping() {}
+  setLooping: function setLooping() {},
+  volume: 0,
+  increaseVolume: function increaseVolume() {},
+  decreaseVolume: function decreaseVolume() {},
+  setVolume: function setVolume() {}
 });
 var api = new _api_APIHandler__WEBPACK_IMPORTED_MODULE_3__.APIHandler();
 function Main() {
@@ -29167,6 +29221,12 @@ function Main() {
     _useState16 = _slicedToArray(_useState15, 2),
     looping = _useState16[0],
     setLooping = _useState16[1];
+  var _useIncrement = (0,_hook_useIncrement__WEBPACK_IMPORTED_MODULE_8__.useIncrement)(50, 5, 0, 100),
+    _useIncrement2 = _slicedToArray(_useIncrement, 4),
+    volume = _useIncrement2[0],
+    increaseVolume = _useIncrement2[1],
+    decreaseVolume = _useIncrement2[2],
+    setVolume = _useIncrement2[3];
   var showAutocomplete = (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(function () {
     return autocomplete.length > 0 ? '' : 'hidden';
   }, [autocomplete]);
@@ -29531,7 +29591,7 @@ function Main() {
       document.removeEventListener('fullscreenchange', fullscreenChange);
     };
   }, [currentFsPost, scrollToPost, setCurrentFsPost]);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(MainContext.Provider, {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(MainContext.Provider, {
     value: {
       removeTagCallback: removeTagCallback,
       includedTags: includedTags,
@@ -29544,60 +29604,64 @@ function Main() {
       currentFsPost: currentFsPost,
       setAutoloadEnd: setAutoloadEnd,
       looping: looping,
-      setLooping: setLooping
+      setLooping: setLooping,
+      volume: volume,
+      increaseVolume: increaseVolume,
+      decreaseVolume: decreaseVolume,
+      setVolume: setVolume
     },
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
       id: "search",
       className: showSearch && 'hidden',
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
         id: "search_toggle",
         onClick: toggleSearch,
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
           id: "search_toggle_pointer"
         })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
         id: "include_exclude_toggle",
         onClick: toggleAddingTag,
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
           className: addingTag ? 'include' : 'exclude'
         })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
         id: "send_search_secondary",
         onClick: fetchPosts,
         title: "Search",
         children: "\u2192"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
         id: "search_content",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
           id: "search_header",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
-            children: ["Posts:", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("br", {}), postCount.toLocaleString()]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("a", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+            children: ["Posts:", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("br", {}), postCount.toLocaleString()]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("a", {
               href: "https://api.rule34.xxx/",
               target: "_blank",
               children: "R34 API"
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("a", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("a", {
               href: "https://github.com/asdfqw90e190t214t/r34v3",
               target: "_blank",
               children: "Source"
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
               onClick: toggleSettings,
               children: "Settings"
             })
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
           id: "search_input",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
             id: "search_submit",
             onClick: fetchPosts,
             title: "Search",
             children: "\u2192"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("input", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("input", {
             name: "tag_search_input",
             type: "text",
             placeholder: "Search for a tag...",
@@ -29624,40 +29688,40 @@ function Main() {
                 return _ref6.apply(this, arguments);
               };
             }())
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
             id: "search_tags",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
               id: "included_tags",
               title: "Included Tags",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
                 id: "included_marker",
                 onClick: function onClick() {
                   return forceAddingTag(true);
                 }
               }), includedTags.map(function (tag, idx) {
-                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_tag__WEBPACK_IMPORTED_MODULE_5__.Tag, {
+                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_tag__WEBPACK_IMPORTED_MODULE_5__.Tag, {
                   tag: tag
                 }, "".concat(tag.id, "_included_tag_").concat(idx));
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
               id: "excluded_tags",
               title: "Excluded Tags",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
                 id: "excluded_marker",
                 onClick: function onClick() {
                   return forceAddingTag(false);
                 }
               }), excludedTags.map(function (tag, idx) {
-                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_tag__WEBPACK_IMPORTED_MODULE_5__.Tag, {
+                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_tag__WEBPACK_IMPORTED_MODULE_5__.Tag, {
                   tag: tag
                 }, "".concat(tag.id, "_excluded_tag_").concat(idx));
               })]
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
             id: "autocomplete",
             className: showAutocomplete,
             children: autocomplete.map(function (o) {
-              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
+              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
                 className: "autocomplete_entry",
                 onClick: function onClick() {
                   return tryAddTag(o.value);
@@ -29668,9 +29732,9 @@ function Main() {
           })]
         })]
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_settings__WEBPACK_IMPORTED_MODULE_7__.Settings, {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_settings__WEBPACK_IMPORTED_MODULE_7__.Settings, {
       hidden: !showSettings
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
       id: "posts",
       ref: postsRef,
       children: posts.map(function (post) {
@@ -29795,7 +29859,10 @@ function Video(post) {
     currentFsPost = _useContext2.currentFsPost,
     setCurrentFsPost = _useContext2.setCurrentFsPost,
     postsRef = _useContext2.postsRef,
-    looping = _useContext2.looping;
+    looping = _useContext2.looping,
+    volume = _useContext2.volume,
+    setVolume = _useContext2.setVolume,
+    decreaseVolume = _useContext2.decreaseVolume;
   var _useInView = (0,react_intersection_observer__WEBPACK_IMPORTED_MODULE_3__.useInView)({
       threshold: 0.5
     }),
@@ -29804,22 +29871,18 @@ function Video(post) {
   var videoRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
   var containerRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
   var videoContainerRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0.05),
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(Date.now()),
     _useState6 = _slicedToArray(_useState5, 2),
-    volume = _useState6[0],
-    setVolume = _useState6[1];
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(Date.now()),
+    lastMove = _useState6[0],
+    setLastMove = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState8 = _slicedToArray(_useState7, 2),
-    lastMove = _useState8[0],
-    setLastMove = _useState8[1];
+    playing = _useState8[0],
+    setPlaying = _useState8[1];
   var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState10 = _slicedToArray(_useState9, 2),
-    playing = _useState10[0],
-    setPlaying = _useState10[1];
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState12 = _slicedToArray(_useState11, 2),
-    hideControls = _useState12[0],
-    setHideControls = _useState12[1];
+    hideControls = _useState10[0],
+    setHideControls = _useState10[1];
   var timeout = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(undefined);
   var playState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(function () {
     return playing ? ' pause' : ' play';
@@ -29869,32 +29932,27 @@ function Video(post) {
     setLastMove(Date.now());
     setHideControls(false);
     var targetPercent = e.nativeEvent.offsetY / e.currentTarget.clientHeight;
-    videoRef.current.volume = Math.min(1, Math.max(0, 1 - targetPercent));
-  }, []);
+    setVolume(Math.min(1, Math.max(0, 1 - targetPercent)));
+  }, [setVolume]);
   var handleVolumeChange = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function (e) {
     var _containerRef$current;
     var newVolume = e.currentTarget.volume;
     if (newVolume === volume) {
       return;
     }
-    setVolume(function (prev) {
-      return prev !== newVolume ? newVolume : prev;
-    });
+    decreaseVolume();
     setLastMove(Date.now());
     setHideControls(false);
     (_containerRef$current = containerRef.current) === null || _containerRef$current === void 0 || _containerRef$current.style.setProperty('--video-volume', "".concat(newVolume * 100, "%"));
-  }, [volume]);
+  }, [decreaseVolume, volume]);
   var handleTimeUpdate = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function (e) {
     if (containerRef.current) {
       containerRef.current.style.setProperty('--video-progress', "".concat(100 * e.currentTarget.currentTime / e.currentTarget.duration, "%"));
     }
   }, []);
-  var handleVolumeScroll = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function (e) {
-    console.log(e.deltaY);
-    setVolume(function (p) {
-      return Math.min(1, Math.max(0, p - e.deltaY / 10000));
-    });
-  }, []);
+  var handleVolumeScroll = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function () {
+    decreaseVolume();
+  }, [decreaseVolume]);
   var handleKeyDown = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function (e) {
     if (e.key === ' ') {
       if (videoRef.current) {
@@ -29973,7 +30031,9 @@ function Video(post) {
   }, [inView]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (videoRef.current) {
-      videoRef.current.volume = Math.min(1, Math.max(0, volume));
+      var _containerRef$current2;
+      videoRef.current.volume = volume;
+      (_containerRef$current2 = containerRef.current) === null || _containerRef$current2 === void 0 || _containerRef$current2.style.setProperty('--video-volume', "".concat(volume * 100, "%"));
     }
   }, [volume]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
@@ -30011,9 +30071,9 @@ function Video(post) {
   }, [lastMove]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     var interval = setInterval(function () {
-      var _containerRef$current2;
+      var _containerRef$current3;
       var percent = getBufferedPercent();
-      (_containerRef$current2 = containerRef.current) === null || _containerRef$current2 === void 0 || _containerRef$current2.style.setProperty('--video-preload', "".concat(percent, "%"));
+      (_containerRef$current3 = containerRef.current) === null || _containerRef$current3 === void 0 || _containerRef$current3.style.setProperty('--video-preload', "".concat(percent, "%"));
       if (Math.ceil(percent) >= 100) {
         clearInterval(interval);
       }
@@ -30091,14 +30151,14 @@ function Tags(_ref) {
   var tags = new Set(unfiltered.map(function (o) {
     return o.trim();
   }));
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState12 = _slicedToArray(_useState11, 2),
+    scrollDragging = _useState12[0],
+    setScrollDragging = _useState12[1];
   var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState14 = _slicedToArray(_useState13, 2),
-    scrollDragging = _useState14[0],
-    setScrollDragging = _useState14[1];
-  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState16 = _slicedToArray(_useState15, 2),
-    scrollable = _useState16[0],
-    setScrollable = _useState16[1];
+    scrollable = _useState14[0],
+    setScrollable = _useState14[1];
   var showScroll = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(function () {
     return scrollable ? ' scrollable' : '';
   }, [scrollable]);
@@ -30570,7 +30630,7 @@ function Tag(_ref) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("6c4e0d8c2cd5fef929ec")
+/******/ 		__webpack_require__.h = () => ("5896f52a6f878011fd84")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
