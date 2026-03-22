@@ -29075,7 +29075,7 @@ __webpack_require__.r(__webpack_exports__);
     if(true) {
       (function() {
         var localsJsonString = undefined;
-        // 1774157177141
+        // 1774157492723
         var cssReload = __webpack_require__(/*! ../../node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js */ "./node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js")(module.id, {});
         // only invalidate when locals change
         if (
@@ -29932,27 +29932,27 @@ function Video(post) {
     setLastMove(Date.now());
     setHideControls(false);
     var targetPercent = e.nativeEvent.offsetY / e.currentTarget.clientHeight;
-    setVolume(Math.min(1, Math.max(0, 1 - targetPercent)));
+    var newVolume = (1 - targetPercent) * 100;
+    setVolume(Math.min(100, Math.max(0, newVolume)));
   }, [setVolume]);
   var handleVolumeChange = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function (e) {
     var _containerRef$current;
-    var newVolume = e.currentTarget.volume;
-    if (newVolume === volume) {
-      return;
-    }
-    decreaseVolume();
+    var newVolume = e.currentTarget.volume * 100;
+    if (Math.round(newVolume) === volume) return;
+    setVolume(newVolume);
     setLastMove(Date.now());
     setHideControls(false);
-    (_containerRef$current = containerRef.current) === null || _containerRef$current === void 0 || _containerRef$current.style.setProperty('--video-volume', "".concat(newVolume * 100, "%"));
-  }, [decreaseVolume, volume]);
+    (_containerRef$current = containerRef.current) === null || _containerRef$current === void 0 || _containerRef$current.style.setProperty('--video-volume', "".concat(newVolume, "%"));
+  }, [setVolume, volume]);
   var handleTimeUpdate = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function (e) {
     if (containerRef.current) {
       containerRef.current.style.setProperty('--video-progress', "".concat(100 * e.currentTarget.currentTime / e.currentTarget.duration, "%"));
     }
   }, []);
-  var handleVolumeScroll = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function () {
-    decreaseVolume();
-  }, [decreaseVolume]);
+  var handleVolumeScroll = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function (e) {
+    var delta = e.deltaY > 0 ? -5 : 5;
+    setVolume(Math.min(100, Math.max(0, volume + delta)));
+  }, [setVolume, volume]);
   var handleKeyDown = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function (e) {
     if (e.key === ' ') {
       if (videoRef.current) {
@@ -30630,7 +30630,7 @@ function Tag(_ref) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("9db895102c339fca2647")
+/******/ 		__webpack_require__.h = () => ("62fe441c00303562aac8")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
