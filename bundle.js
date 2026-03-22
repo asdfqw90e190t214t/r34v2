@@ -29075,7 +29075,7 @@ __webpack_require__.r(__webpack_exports__);
     if(true) {
       (function() {
         var localsJsonString = undefined;
-        // 1773980262151
+        // 1774157177141
         var cssReload = __webpack_require__(/*! ../../node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js */ "./node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js")(module.id, {});
         // only invalidate when locals change
         if (
@@ -30032,7 +30032,7 @@ function Video(post) {
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (videoRef.current) {
       var _containerRef$current2;
-      videoRef.current.volume = volume;
+      videoRef.current.volume = volume / 100.0;
       (_containerRef$current2 = containerRef.current) === null || _containerRef$current2 === void 0 || _containerRef$current2.style.setProperty('--video-volume', "".concat(volume * 100, "%"));
     }
   }, [volume]);
@@ -30630,7 +30630,7 @@ function Tag(_ref) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("5896f52a6f878011fd84")
+/******/ 		__webpack_require__.h = () => ("9db895102c339fca2647")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
