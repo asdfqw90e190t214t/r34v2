@@ -29075,7 +29075,7 @@ __webpack_require__.r(__webpack_exports__);
     if(true) {
       (function() {
         var localsJsonString = undefined;
-        // 1774157492723
+        // 1774158821049
         var cssReload = __webpack_require__(/*! ../../node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js */ "./node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js")(module.id, {});
         // only invalidate when locals change
         if (
@@ -29862,7 +29862,8 @@ function Video(post) {
     looping = _useContext2.looping,
     volume = _useContext2.volume,
     setVolume = _useContext2.setVolume,
-    decreaseVolume = _useContext2.decreaseVolume;
+    decreaseVolume = _useContext2.decreaseVolume,
+    increaseVolume = _useContext2.increaseVolume;
   var _useInView = (0,react_intersection_observer__WEBPACK_IMPORTED_MODULE_3__.useInView)({
       threshold: 0.5
     }),
@@ -29926,33 +29927,39 @@ function Video(post) {
     videoRef.current.currentTime = Math.min(videoRef.current.duration, Math.max(0, targetTime));
   }, []);
   var handleVolumeClick = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function (e) {
-    if (!videoRef.current) {
+    if (!videoRef.current || !containerRef.current) {
       return;
     }
     setLastMove(Date.now());
     setHideControls(false);
-    var targetPercent = e.nativeEvent.offsetY / e.currentTarget.clientHeight;
-    var newVolume = (1 - targetPercent) * 100;
-    setVolume(Math.min(100, Math.max(0, newVolume)));
-  }, [setVolume]);
-  var handleVolumeChange = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function (e) {
-    var _containerRef$current;
-    var newVolume = e.currentTarget.volume * 100;
-    if (Math.round(newVolume) === volume) return;
+
+    // Calculate from bottom (volume bar grows upward)
+    var percent = 1 - e.nativeEvent.offsetY / e.currentTarget.clientHeight;
+    var newVolume = Math.min(100, Math.max(0, 100 * percent));
     setVolume(newVolume);
-    setLastMove(Date.now());
-    setHideControls(false);
-    (_containerRef$current = containerRef.current) === null || _containerRef$current === void 0 || _containerRef$current.style.setProperty('--video-volume', "".concat(newVolume, "%"));
-  }, [setVolume, volume]);
+    videoRef.current.volume = newVolume / 100.0;
+    containerRef.current.style.setProperty('--video-volume', "".concat(newVolume, "%"));
+  }, [setVolume]);
   var handleTimeUpdate = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function (e) {
     if (containerRef.current) {
       containerRef.current.style.setProperty('--video-progress', "".concat(100 * e.currentTarget.currentTime / e.currentTarget.duration, "%"));
     }
   }, []);
   var handleVolumeScroll = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function (e) {
-    var delta = e.deltaY > 0 ? -5 : 5;
-    setVolume(Math.min(100, Math.max(0, volume + delta)));
-  }, [setVolume, volume]);
+    if (!videoRef.current || !containerRef.current) {
+      return;
+    }
+    var newVolume = volume;
+    if (e.nativeEvent.deltaY < 0) {
+      newVolume = Math.min(100, volume + 5);
+      increaseVolume();
+    } else {
+      newVolume = Math.max(0, volume - 5);
+      decreaseVolume();
+    }
+    videoRef.current.volume = newVolume / 100.0;
+    containerRef.current.style.setProperty('--video-volume', "".concat(newVolume, "%"));
+  }, [decreaseVolume, increaseVolume, volume]);
   var handleKeyDown = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function (e) {
     if (e.key === ' ') {
       if (videoRef.current) {
@@ -29994,10 +30001,10 @@ function Video(post) {
       e.preventDefault();
     }
   }, []);
-  var handleMouseMove = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function () {
+  var handleMouseMove = function handleMouseMove() {
     setHideControls(false);
     setLastMove(Date.now());
-  }, []);
+  };
   var getHidingControls = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function () {
     return hideControls ? ' hidden' : ' visible';
   }, [hideControls]);
@@ -30029,13 +30036,6 @@ function Video(post) {
       (_videoRef$current3 = videoRef.current) === null || _videoRef$current3 === void 0 || _videoRef$current3.pause();
     }
   }, [inView]);
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    if (videoRef.current) {
-      var _containerRef$current2;
-      videoRef.current.volume = volume / 100.0;
-      (_containerRef$current2 = containerRef.current) === null || _containerRef$current2 === void 0 || _containerRef$current2.style.setProperty('--video-volume', "".concat(volume * 100, "%"));
-    }
-  }, [volume]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     var container = videoContainerRef === null || videoContainerRef === void 0 ? void 0 : videoContainerRef.current;
     container === null || container === void 0 || container.addEventListener('keydown', handleKeyDown);
@@ -30071,9 +30071,9 @@ function Video(post) {
   }, [lastMove]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     var interval = setInterval(function () {
-      var _containerRef$current3;
+      var _containerRef$current;
       var percent = getBufferedPercent();
-      (_containerRef$current3 = containerRef.current) === null || _containerRef$current3 === void 0 || _containerRef$current3.style.setProperty('--video-preload', "".concat(percent, "%"));
+      (_containerRef$current = containerRef.current) === null || _containerRef$current === void 0 || _containerRef$current.style.setProperty('--video-preload', "".concat(percent, "%"));
       if (Math.ceil(percent) >= 100) {
         clearInterval(interval);
       }
@@ -30082,6 +30082,11 @@ function Video(post) {
       return clearInterval(interval);
     };
   }, []);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    if (containerRef.current) {
+      containerRef.current.style.setProperty('--video-volume', "".concat(volume, "%"));
+    }
+  }, [volume]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (currentFsPost === post.id) {
       var _videoRef$current5;
@@ -30106,7 +30111,6 @@ function Video(post) {
         onContextMenu: function onContextMenu(e) {
           return e.preventDefault();
         },
-        onVolumeChange: handleVolumeChange,
         onTimeUpdate: handleTimeUpdate,
         onEnded: function onEnded() {
           return setPlaying(false);
@@ -30630,7 +30634,7 @@ function Tag(_ref) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("62fe441c00303562aac8")
+/******/ 		__webpack_require__.h = () => ("11ddc8eff65a5cd4714a")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
